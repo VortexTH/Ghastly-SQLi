@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
+import javax.swing.JPanel;
 
 public class main_gui {
 
@@ -52,14 +53,14 @@ public class main_gui {
 		tabbedPane.setBounds(10, 11, 1884, 998);
 		frame.getContentPane().add(tabbedPane);
 		
-		JTabbedPane paneBrowser = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("Browser", null, paneBrowser, null);
+		JPanel panelBrowser = new JPanel();
+		tabbedPane.addTab("Browser", null, panelBrowser, null);
 		
-		JTabbedPane paneAttack = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("Attack", null, paneAttack, null);
+		JPanel panelAttack = new JPanel();
+		tabbedPane.addTab("Attack", null, panelAttack, null);
 		
-		JTabbedPane paneTools = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("Tools", null, paneTools, null);
+		JPanel panelTools = new JPanel();
+		tabbedPane.addTab("Tools", null, panelTools, null);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
