@@ -4,6 +4,7 @@ import java.awt.*;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -16,9 +17,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class main_gui {
-
+	
+	public JEditorPane editorPaneBrowser = new JEditorPane();
 	private JFrame frame;
-	private JTextField txtBrowserURL;
+	JTextField txtBrowserURL;
 
 	/**
 	 * Launch the application.
@@ -77,16 +79,14 @@ public class main_gui {
 		buttonBrowserSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				loadPage(txtBrowserURL.getText());
-				
-				
+				loadPage(txtBrowserURL.getText());			
 				
 			}
 		});
 		buttonBrowserSearch.setBounds(1539, 10, 200, 30);
 		panelBrowser.add(buttonBrowserSearch);
 		
-		JEditorPane editorPaneBrowser = new JEditorPane();
+		
 		editorPaneBrowser.setBounds(10, 51, 1859, 908);
 		panelBrowser.add(editorPaneBrowser);
 		editorPaneBrowser.setEditable(false);
@@ -111,4 +111,26 @@ public class main_gui {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 	}
+	
+	
+   private void loadPage(String URLinput){
+		
+		try{
+			
+			//MOST GODDAMN IMPORTANT CLASS!!!!
+			editorPaneBrowser.setPage(URLinput);			
+			//txtBrowserURL.setText(URLinput);
+			
+		}
+		
+		 catch(Exception e){
+			 JOptionPane.showMessageDialog(null, "This Page could not be loaded!");
+		 }
+		
+		
+	}
+	
+	
+	
+	
 }
