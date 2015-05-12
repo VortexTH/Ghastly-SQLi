@@ -6,10 +6,19 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class main_gui {
 
 	private JFrame frame;
+	private JTextField txtBrowserURL;
 
 	/**
 	 * Launch the application.
@@ -55,12 +64,49 @@ public class main_gui {
 		
 		JPanel panelBrowser = new JPanel();
 		tabbedPane.addTab("Browser", null, panelBrowser, null);
+		panelBrowser.setLayout(null);
+		
+		txtBrowserURL = new JTextField();
+		txtBrowserURL.setText("");
+		txtBrowserURL.setFont(new Font("Dialog", Font.PLAIN, 16));
+		txtBrowserURL.setColumns(10);
+		txtBrowserURL.setBounds(10, 10, 1519, 30);
+		panelBrowser.add(txtBrowserURL);
+		
+		JButton buttonBrowserSearch = new JButton("Search");
+		buttonBrowserSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				loadPage(txtBrowserURL.getText());
+				
+				
+				
+			}
+		});
+		buttonBrowserSearch.setBounds(1539, 10, 200, 30);
+		panelBrowser.add(buttonBrowserSearch);
+		
+		JEditorPane editorPaneBrowser = new JEditorPane();
+		editorPaneBrowser.setBounds(10, 51, 1859, 908);
+		panelBrowser.add(editorPaneBrowser);
+		editorPaneBrowser.setEditable(false);
+		editorPaneBrowser.addHyperlinkListener(
+				new HyperlinkListener(){
+					@Override
+					public void hyperlinkUpdate(HyperlinkEvent event) {
+						if(event.getEventType() == HyperlinkEvent.EventType.ACTIVATED){
+							loadPage(event.getURL().toString());
+						}
+					}					
+				}			
+			);
 		
 		JPanel panelAttack = new JPanel();
 		tabbedPane.addTab("Attack", null, panelAttack, null);
 		
 		JPanel panelTools = new JPanel();
 		tabbedPane.addTab("Tools", null, panelTools, null);
+		panelTools.setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
