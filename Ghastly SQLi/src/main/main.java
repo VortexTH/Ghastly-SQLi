@@ -35,8 +35,16 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import javax.swing.JTextArea;
+import java.awt.Color;
+import javax.swing.DropMode;
+import javax.swing.JTextPane;
+import javax.swing.JScrollPane;
 
 
 
@@ -495,6 +503,30 @@ public class main {
 		arguserdefinedinjection.setBounds(330, 390, 86, 20);
 		hashcat.add(arguserdefinedinjection);
 		
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("LOG", null, panel_1, null);
+		
+		JTextArea logarea = new JTextArea();
+		logarea.setBounds(10, 11, 739, 568);
+		panel_1.add(logarea);
+		
+		JPanel panel = new JPanel();
+		tabbedPane.addTab("DUMP", null, panel, null);
+		
+		JPanel HashID = new JPanel();
+		tabbedPane.addTab("Hash-ID", null, HashID, null);
+		HashID.setLayout(null);
+		
+		JButton btnClearLog = new JButton("Clear Log");
+		btnClearLog.setBounds(10, 590, 89, 23);
+		btnClearLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				logarea.setText("");
+			}
+		});
+		panel_1.setLayout(null);
+		panel_1.add(btnClearLog);		
+		
 		JButton btnEnumerate = new JButton("ENUMERATE");
 		btnEnumerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -525,12 +557,11 @@ public class main {
 				stringTorPort = torport.getText();
 				stringTorSocket = torsocket.getSelectedItem().toString();
 				if(tormode == true){					
-					TOR = " --tor " + "--tor-type=" + stringTorSocket + FUser;
+					TOR = " --tor " + "--tor-type=" + stringTorSocket + " --tor-port=" + stringTorPort + FUser + " --check-tor ";
 				}
 				
 				
-				JOptionPane.showMessageDialog(null, stringTorSocket);
-				
+								
 				//Enumeration Options
 				if(stringEnum == "Simple Scan"){
 					enumeration = "";
@@ -560,16 +591,35 @@ public class main {
 				
 
 				//Gets Runtime, executes cmd, passing "stringCommand" to the process.
-				Runtime rt = Runtime.getRuntime();
+				Process proc = null;
 				
+				Runtime rt = Runtime.getRuntime();				
 				try {
-					rt.exec("cmd.exe /c start cmd.exe /k \""+stringCommand+"\"");
+					proc = rt.exec("cmd.exe /c start cmd.exe /k \""+stringCommand+"\"");
 				} catch (IOException z) {
 					JOptionPane.showMessageDialog(null, z);
 					z.printStackTrace();
 				}
-							
 				
+				//Creates an input stream from the cmd Process and reads it
+				InputStream inputStream = proc.getInputStream();
+				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+				
+				//Appends Input Stream from cdm to logarea				
+				String line = "";				
+				
+				try {
+				line = bufferedReader.readLine();					
+				} catch (IOException e2) {
+					JOptionPane.showMessageDialog(null, e2);
+				}
+				
+					while (line != null)
+					{
+					    logarea.append(line);
+					}				
 				
 				
 				
@@ -581,18 +631,14 @@ public class main {
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				logarea.setText("Cleared");
 			}
-		});
+		});		
 		btnClear.setBounds(682, 307, 67, 23);
 		hashcat.add(btnClear);
 		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("DUMP", null, panel, null);
 		
-		JPanel HashID = new JPanel();
-		tabbedPane.addTab("Hash-ID", null, HashID, null);
-		HashID.setLayout(null);
+		
 		
 		}
 	}
