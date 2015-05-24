@@ -519,16 +519,17 @@ public class main {
 				
 				//TOR Options
 				if(stringFakeUserAgent == "Google Bot"){
-					 FUser = "--user-agent=\"Googlebot (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\"";
+					 FUser = " --user-agent=\"Googlebot (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\"";
 				}
 				stringTorSocket = torsocket.getSelectedItem().toString();
 				stringTorPort = torport.getText();
-				if(tormode == true){
+				stringTorSocket = torsocket.getSelectedItem().toString();
+				if(tormode == true){					
 					TOR = " --tor " + "--tor-type=" + stringTorSocket + FUser;
 				}
 				
 				
-				
+				JOptionPane.showMessageDialog(null, stringTorSocket);
 				
 				//Enumeration Options
 				if(stringEnum == "Simple Scan"){
