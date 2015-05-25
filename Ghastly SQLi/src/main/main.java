@@ -387,6 +387,22 @@ public class main {
 		hashcat.add(boxwindowsregistryaccess);
 		
 		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Runtime runt = Runtime.getRuntime();
+				
+				String updatecmd = "python sqlmap.py " + "--update";
+				
+				try {
+					runt.exec("cmd.exe /c start cmd.exe /k \""+updatecmd+"\"");
+				} catch (IOException z) {
+					JOptionPane.showMessageDialog(null, z);
+					z.printStackTrace();
+				}
+				
+			}
+		});
 		btnUpdate.setBounds(149, 471, 89, 23);
 		hashcat.add(btnUpdate);
 		
@@ -589,38 +605,40 @@ public class main {
 				stringCommand = "python sqlmap.py " + "-u " + "\"" + stringTargetURL + "\"" + enumeration + TOR;
 				}
 				
-
 				//Gets Runtime, executes cmd, passing "stringCommand" to the process.
-				Process proc = null;
+								
+				Runtime rt = Runtime.getRuntime();
 				
-				Runtime rt = Runtime.getRuntime();				
 				try {
-					proc = rt.exec("cmd.exe /c start cmd.exe /k \""+stringCommand+"\"");
+					rt.exec("cmd.exe /c start cmd.exe /k \""+stringCommand+"\"");
 				} catch (IOException z) {
 					JOptionPane.showMessageDialog(null, z);
 					z.printStackTrace();
 				}
 				
 				//Creates an input stream from the cmd Process and reads it
+				/*
 				InputStream inputStream = proc.getInputStream();
 				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 				
-				//Appends Input Stream from cdm to logarea				
+				Appends Input Stream from cdm to logarea				
 				String line = "";				
 				
 				try {
 				line = bufferedReader.readLine();					
 				} catch (IOException e2) {
+				   
 					JOptionPane.showMessageDialog(null, e2);
-				}
+				
+				   }
 				
 					while (line != null)
 					{
 					    logarea.append(line);
 					}				
-				
+				*/
 				
 				
 			}
@@ -631,7 +649,10 @@ public class main {
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logarea.setText("Cleared");
+				fordatabase.setText("");
+				foruser.setText("");
+				fortable.setText("");
+				forcolumn.setText("");
 			}
 		});		
 		btnClear.setBounds(682, 307, 67, 23);
