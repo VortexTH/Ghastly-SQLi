@@ -40,8 +40,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import javax.swing.JTextArea;
+
 import java.awt.Color;
+
 import javax.swing.DropMode;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
@@ -50,6 +53,7 @@ import javax.swing.JScrollPane;
 
 
 
+@SuppressWarnings("unused")
 public class main {
 	
 	public String stringCommand = "";
@@ -83,6 +87,7 @@ public class main {
 	public String stringFakeUserAgent = "";
 	public String FUser = "";
 	public boolean tormode = false;
+	public String stringThreads = "";
 
 	private JFrame frmEhcV;
 	private JTextField targetURL;
@@ -102,6 +107,7 @@ public class main {
 	private JTextField argosa;
 	private JTextField argwinregaccess;
 	private JTextField arguserdefinedinjection;
+	private JTextField threads;
 
 	/**
 	 * Launch the application.
@@ -130,12 +136,16 @@ public class main {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	
+	
 	private void initialize() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		frmEhcV = new JFrame();
@@ -509,6 +519,11 @@ public class main {
 		argosa.setBounds(330, 332, 86, 20);
 		hashcat.add(argosa);
 		
+		threads = new JTextField();
+		threads.setBounds(294, 53, 86, 20);
+		hashcat.add(threads);
+		threads.setColumns(10);
+		
 		argwinregaccess = new JTextField();
 		argwinregaccess.setColumns(10);
 		argwinregaccess.setBounds(330, 361, 86, 20);
@@ -564,6 +579,12 @@ public class main {
 				String TOR = "";
 				
 				
+				//Threads
+				if (threads.getText().length()>0){
+					stringThreads = threads.getText();
+				}
+				
+				
 				
 				//TOR Options
 				if(stringFakeUserAgent == "Google Bot"){
@@ -602,11 +623,12 @@ public class main {
 				
 				//Sets Command String that is passed to SQLmap
 				if(connection.getSelectedItem().toString() == "URL"){
-				stringCommand = "python sqlmap.py " + "-u " + "\"" + stringTargetURL + "\"" + enumeration + TOR;
+				stringCommand = "python sqlmap.py " + "-u " + "\"" + stringTargetURL + "\"" + enumeration + TOR + stringThreads;
 				}
 				
+				
+				
 				//Gets Runtime, executes cmd, passing "stringCommand" to the process.
-								
 				Runtime rt = Runtime.getRuntime();
 				
 				try {
@@ -615,6 +637,8 @@ public class main {
 					JOptionPane.showMessageDialog(null, z);
 					z.printStackTrace();
 				}
+				
+
 				
 				//Creates an input stream from the cmd Process and reads it
 				/*
@@ -657,6 +681,12 @@ public class main {
 		});		
 		btnClear.setBounds(682, 307, 67, 23);
 		hashcat.add(btnClear);
+		
+		JLabel lblThreads = new JLabel("Threads:");
+		lblThreads.setBounds(238, 56, 46, 14);
+		hashcat.add(lblThreads);
+		
+		
 		
 		
 		
