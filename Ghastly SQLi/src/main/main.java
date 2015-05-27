@@ -308,7 +308,7 @@ public class main {
 		
 		JComboBox boxoptimization = new JComboBox();
 		boxoptimization.setMaximumRowCount(40);
-		boxoptimization.setModel(new DefaultComboBoxModel(new String[] {"(none)", "All (Auto; not recommended)", "Predict Output", "Keep Alive", "Null Connection", "Max Number Of Threads:"}));
+		boxoptimization.setModel(new DefaultComboBoxModel(new String[] {"(none)", "All (Auto; not recommended)", "Predict Output", "Keep Alive", "Null Connection"}));
 		boxoptimization.setBounds(78, 275, 242, 20);
 		hashcat.add(boxoptimization);
 		
@@ -566,6 +566,7 @@ public class main {
 				stringInjection = boxinjection.getSelectedItem().toString();
 				stringFingerprint = boxfingerprint.getSelectedItem().toString();
 				stringDetection = boxdetection.getSelectedItem().toString();
+				stringOptimization = boxoptimization.getSelectedItem().toString();
 				
 				stringTargetURL = targetURL.getText();
 				stringUserArg = foruser.getText();
@@ -577,11 +578,26 @@ public class main {
 				
 				String enumeration = "";
 				String TOR = "";
+				String optimize = "";
+				
+				//Optimization Options
+				if(stringOptimization == "All (Auto; not recommended)"){
+					optimize = " -o";
+				}
+				else if(stringOptimization == "Predict Output"){
+					optimize = " --predict-output";
+				}
+				else if(stringOptimization == "Keep Alive"){
+					optimize = " --keep-alive";
+				}
+				else if(stringOptimization == "Null Connection"){
+					optimize = " --null-connection";
+				}
 				
 				
 				//Threads
 				if (threads.getText().length()>0){
-					stringThreads = threads.getText();
+					stringThreads = " --threads=" + threads.getText();
 				}
 				
 				
@@ -623,7 +639,7 @@ public class main {
 				
 				//Sets Command String that is passed to SQLmap
 				if(connection.getSelectedItem().toString() == "URL"){
-				stringCommand = "python sqlmap.py " + "-u " + "\"" + stringTargetURL + "\"" + enumeration + TOR + stringThreads;
+				stringCommand = "python sqlmap.py " + "-u " + "\"" + stringTargetURL + "\"" + enumeration + TOR + stringThreads + optimize; 
 				}
 				
 				
