@@ -459,7 +459,7 @@ public class main {
 		JButton button = new JButton("?");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "<html>Make sure there is an Instance<br>Of TOR runnig on your System<br>At the moment!</html>");
+				JOptionPane.showMessageDialog(null, "<html>Make sure there is an Instance of TOR browser or<br>a TOR port open and runnig on your System<br>before attempting to make use of these options!</html>");
 			}
 		});
 		button.setFont(new Font("Tahoma", Font.BOLD, 12));
